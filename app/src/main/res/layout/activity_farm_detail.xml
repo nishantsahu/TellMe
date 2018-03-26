@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.nishu.tellme.FarmDetailActivity"
+    android:background="@drawable/background">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Farm Details"
+            android:id="@+id/text"
+            android:layout_marginVertical="10dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text"
+            android:id="@+id/areaField"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/textfield"
+                    android:padding="10dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:hint="Land Area"
+                    android:inputType="number"
+                    android:id="@+id/area"
+                    android:layout_marginVertical="10dp"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/textfield"
+                    android:padding="10dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:hint="Area"
+                    android:inputType="number"
+                    android:id="@+id/units"
+                    android:layout_marginVertical="10dp"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/textfield"
+            android:padding="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:hint="Area"
+            android:inputType="number"
+            android:layout_below="@+id/areaField"
+            android:id="@+id/soil"
+            android:layout_marginVertical="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/soil"
+            android:id="@+id/location"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+
+                <EditText
+                    android:id="@+id/locationText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="10dp"
+                    android:background="@drawable/textfield"
+                    android:hint="Location"
+                    android:padding="10dp"
+                    android:enabled="false" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/textfield"
+                    android:padding="10dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:text="Get Location"
+                    android:inputType="number"
+                    android:id="@+id/getLocation"
+                    android:layout_marginVertical="10dp"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/location"
+            android:text="Submit"
+            android:id="@+id/submit"
+            android:layout_marginVertical="10dp"
+            android:textColor="#fff"
+            android:textAllCaps="false"
+            android:background="@drawable/button"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
