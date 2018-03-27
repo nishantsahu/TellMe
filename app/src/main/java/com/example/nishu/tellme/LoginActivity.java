@@ -125,10 +125,12 @@ public class LoginActivity extends AppCompatActivity {
 
                                     if (status.equals("success")){
                                         Intent dashboard = new Intent(getApplicationContext(), DashboardActivity.class);
+                                        String name = mainObj.getString("name");
                                         SharedPreferences sharedPreferences = getSharedPreferences("MyData", Context.MODE_PRIVATE);
                                         SharedPreferences.Editor editor1 = sharedPreferences.edit();
                                         editor1.putString("aadharID", mAadhar.getText().toString());
                                         editor1.putString("password", mPassword.getText().toString());
+                                        editor1.putString("name", name);
                                         editor1.commit();
                                         startActivity(dashboard);
                                     }

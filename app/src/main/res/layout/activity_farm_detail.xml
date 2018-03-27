@@ -23,10 +23,33 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/textfield"
+            android:padding="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:hint="Land Area"
+            android:layout_below="@+id/text"
+            android:id="@+id/farmName"
+            android:layout_marginVertical="10dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/textfield"
+            android:padding="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:hint="Ground water level"
+            android:layout_below="@+id/farmName"
+            android:inputType="number"
+            android:id="@+id/wlevel"
+            android:layout_marginVertical="10dp"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/text"
+            android:layout_below="@+id/wlevel"
             android:id="@+id/areaField"
             android:orientation="horizontal">
 

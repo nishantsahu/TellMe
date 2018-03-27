@@ -45,7 +45,7 @@ public class FarmDetailActivity extends AppCompatActivity {
 
     String URL;
     Spinner units, soils;
-    EditText mArea;
+    EditText mArea, mFarmName, mGLevel;
     Double area;
     Button btn, getLocation;
     String record, city, dist, state;
@@ -68,6 +68,8 @@ public class FarmDetailActivity extends AppCompatActivity {
 
         getLocation = findViewById(R.id.getLocation);
         locationText = findViewById(R.id.locationText);
+        mFarmName = findViewById(R.id.farmName);
+        mGLevel = findViewById(R.id.wlevel);
         mArea = findViewById(R.id.area);
 
         progressDialog = new ProgressDialog(this);
@@ -287,16 +289,18 @@ public class FarmDetailActivity extends AppCompatActivity {
 
         getLocationData();
 
-        final String sArea, sUnit, sLocation, sSoil;
+        final String sArea, sUnit, sLocation, sSoil, sFarmName, sWaterLevel;
 
         sArea = mArea.getText().toString();
         sUnit = record;
         sSoil = soilType;
+        sFarmName = mFarmName.getText().toString();
+        sWaterLevel = mGLevel.getText().toString();
         sLocation = locationText.getText().toString();
         SharedPreferences sharedPreferences = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         aadhar = sharedPreferences.getString("aadharID", "");
 
-        if (sArea.equals("")||sUnit.equals("")||sSoil.equals("null")||sLocation.equals("")){
+        if (sArea.equals("")||sUnit.equals("")||sSoil.equals("null")||sLocation.equals("")||sFarmName.equals("")||sWaterLevel.equals("")){
             progressDialog.dismiss();
             Toast.makeText(getApplicationContext(), "Empty field", Toast.LENGTH_LONG).show();
         }
@@ -320,14 +324,16 @@ public class FarmDetailActivity extends AppCompatActivity {
             Request request = new Request.Builder()
                     .url(URL+"/feedFarmData")
                     .post(RequestBody.create(MediaType.parse("application/json"), "{\n" +
-                            "\t\"area\" : \""+area+"\",\n" +
                             "\t\"aadharID\" : \""+aadhar+"\",\n" +
-                            "\t\"soilType\" : \""+sSoil+"\",\n" +
-                            "\t\"lat\" : \""+lat+"\",\n" +
-                            "\t\"lng\" : \""+lng+"\",\n" +
+                            "\t\"latitude\" : "+lat+",\n" +
+                            "\t\"longitude\" : "+lng+",\n" +
+                            "\t\"farmName\" : \""+sFarmName+"\",\n" +
+                            "\t\"state\" : \""+state+",\",\n" +
+                            "\t\"district\" : \""+dist+"\",\n" +
                             "\t\"city\" : \""+city+"\",\n" +
-                            "\t\"state\" : \""+state+"\",\n" +
-                            "\t\"dist\" : \""+dist+"\"\n" +
+                            "\t\"landArea\" : \""+sArea+"\",\n" +
+                            "\t\"groundWaterLevel\" : \""+sWaterLevel+"\",\n" +
+                            "\t\"soilType\":\""+soilType+"\"\n" +
                             "}")).build();
 
             client.newCall(request).enqueue(new Callback() {
@@ -351,17 +357,19 @@ public class FarmDetailActivity extends AppCompatActivity {
                                 try {
                                     progressDialog.dismiss();
                                     String json = response.body().string();
-                                    Toast.makeText(getApplicationContext(), "{\n" +
-                                            "\t\"area\" : \""+area+"\",\n" +
-                                            "\t\"aadharID\" : \""+aadhar+"\",\n" +
-                                            "\t\"soilType\" : \""+sSoil+"\",\n" +
-                                            "\t\"lat\" : \""+lat+"\",\n" +
-                                            "\t\"lng\" : \""+lng+"\",\n" +
-                                            "\t\"city\" : \""+city+"\",\n" +
-                                            "\t\"state\" : \""+state+"\",\n" +
-                                            "\t\"dist\" : \""+dist+"\"\n" +
-                                            "}", Toast.LENGTH_LONG).show();
+                                    JSONObject mainObj = new JSONObject(json);
+                                    String status = mainObj.getString("status");
+                                    if (status.equals("success")){
+                                        Toast.makeText(getApplicationContext(), "Your farm details are registered", Toast.LENGTH_LONG).show();
+                                        Intent dashboard = new Intent(getApplicationContext(), DashboardActivity.class);
+                                        startActivity(dashboard);
+                                    }
+                                    else{
+                                        Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();
+                                    }
                                 } catch (IOException e) {
+                                    e.printStackTrace();
+                                } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }

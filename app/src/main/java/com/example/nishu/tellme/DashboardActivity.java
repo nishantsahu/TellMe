@@ -53,8 +53,10 @@ public class DashboardActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         aadhar = sharedPreferences.getString("aadharID", "");
         pass = sharedPreferences.getString("password", "");
+        name = sharedPreferences.getString("name", "");
+        mName.setText("Welcome " + name);
 
-        login();
+//        login();
 
         farmDetails = findViewById(R.id.farmDetails);
         cropDetails = findViewById(R.id.CropDetails);
