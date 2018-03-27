@@ -46,6 +46,7 @@ public class FarmDetailActivity extends AppCompatActivity {
     String URL;
     Spinner units, soils;
     EditText mArea;
+    Double area;
     Button btn, getLocation;
     String record, city, dist, state;
     EditText locationText;
@@ -284,7 +285,9 @@ public class FarmDetailActivity extends AppCompatActivity {
 
     public void submit() {
 
-        String sArea, sUnit, sLocation, sSoil;
+        getLocationData();
+
+        final String sArea, sUnit, sLocation, sSoil;
 
         sArea = mArea.getText().toString();
         sUnit = record;
@@ -298,11 +301,26 @@ public class FarmDetailActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Empty field", Toast.LENGTH_LONG).show();
         }
         else{
+
+            switch(sUnit){
+                case "acr":
+                    area = Double.valueOf(sArea)*4046.86;
+                    break;
+                case "mtr":
+                    area = Double.valueOf(sArea);
+                    break;
+                case "hec":
+                    area = Double.valueOf(sArea)*10000;
+                    break;
+                case "yrd":
+                    area = Double.valueOf(sArea)*0.0836127;
+                    break;
+            }
+
             Request request = new Request.Builder()
                     .url(URL+"/feedFarmData")
                     .post(RequestBody.create(MediaType.parse("application/json"), "{\n" +
-                            "\t\"area\" : \""+sArea+"\",\n" +
-                            "\t\"unit\" : \""+sUnit+"\",\n" +
+                            "\t\"area\" : \""+area+"\",\n" +
                             "\t\"aadharID\" : \""+aadhar+"\",\n" +
                             "\t\"soilType\" : \""+sSoil+"\",\n" +
                             "\t\"lat\" : \""+lat+"\",\n" +
@@ -333,7 +351,16 @@ public class FarmDetailActivity extends AppCompatActivity {
                                 try {
                                     progressDialog.dismiss();
                                     String json = response.body().string();
-                                    Toast.makeText(getApplicationContext(), json, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "{\n" +
+                                            "\t\"area\" : \""+area+"\",\n" +
+                                            "\t\"aadharID\" : \""+aadhar+"\",\n" +
+                                            "\t\"soilType\" : \""+sSoil+"\",\n" +
+                                            "\t\"lat\" : \""+lat+"\",\n" +
+                                            "\t\"lng\" : \""+lng+"\",\n" +
+                                            "\t\"city\" : \""+city+"\",\n" +
+                                            "\t\"state\" : \""+state+"\",\n" +
+                                            "\t\"dist\" : \""+dist+"\"\n" +
+                                            "}", Toast.LENGTH_LONG).show();
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
