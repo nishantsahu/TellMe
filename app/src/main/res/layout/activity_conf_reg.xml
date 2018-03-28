@@ -4,61 +4,100 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.nishu.tellme.ConfRegActivity"
-    android:background="@drawable/background">
+    tools:context="com.example.nishu.tellme.ConfRegActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true">
+        android:layout_height="match_parent"
+        android:background="#ffffff">
+    </RelativeLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Final Step"
-            android:id="@+id/text"
-            android:layout_marginVertical="10dp"
+    <RelativeLayout
+        android:id="@+id/pCard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card"
+            android:layout_width="280dp"
+            android:layout_height="240dp"
             android:layout_centerHorizontal="true"
-            android:textColor="#fff"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_centerVertical="true"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="12dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <EditText
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="240dp"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:hint="Enter Password"
+                    android:inputType="textPassword"/>
+
+                <EditText
+                    android:id="@+id/cpassword"
+                    android:layout_width="240dp"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="90dp"
+                    android:hint="Confirm Password"
+                    android:inputType="textPassword" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="210dp"
+                    android:background="@drawable/wavebackground">
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="170dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:src="@drawable/wave" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="280dp"
+        android:layout_height="310dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/textfield"
-            android:padding="10dp"
-            android:inputType="textPassword"
-            android:layout_below="@+id/text"
-            android:layout_marginHorizontal="20dp"
-            android:hint="Create Password"
-            android:id="@+id/password"
-            android:layout_marginVertical="10dp"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/textfield"
-            android:padding="10dp"
-            android:layout_marginHorizontal="20dp"
-            android:hint="Confirm Password"
-            android:id="@+id/cpassword"
-            android:inputType="textPassword"
-            android:layout_below="@+id/password"
-            android:layout_marginVertical="10dp"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/cpassword"
-            android:text="Submit"
-            android:id="@+id/submit"
-            android:layout_marginVertical="10dp"
-            android:textColor="#fff"
-            android:textAllCaps="false"
-            android:background="@drawable/button"/>
-
+            android:layout_height="match_parent">
+            <android.support.v7.widget.CardView
+                android:layout_width="130dp"
+                android:layout_height="50dp"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="12dp"
+                android:layout_marginVertical="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="10dp"
+                android:layout_alignParentBottom="true">
+                <Button
+                    android:id="@+id/submit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/login_button"
+                    android:text="Login"
+                    android:textColor="#ffffff"
+                    android:textSize="17dp" />
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
     </RelativeLayout>
 
 </RelativeLayout>

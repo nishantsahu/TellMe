@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -32,7 +33,8 @@ public class LoginActivity extends AppCompatActivity {
     OkHttpClient client;
     public String URL = "https://quiet-sierra-48529.herokuapp.com/api";
     EditText mAadhar, mPassword;
-    Button go, create;
+    Button go;
+    TextView create,login_again;
     ProgressDialog mProgressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +69,6 @@ public class LoginActivity extends AppCompatActivity {
                 login();
             }
         });
-
         create = findViewById(R.id.account);
 
         create.setOnClickListener(new View.OnClickListener() {

@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#21E4EA</color>
-    <color name="colorPrimaryDark">#453CE2</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#442178</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="bluetext">#006680</color>
+    <color name="Darkpurple">#ce73bf</color>
+    <color name="Lightblue">#649bf6</color>
+    <color name="buttonlight">#5ffaf1</color>
+    <color name="buttondark">#54a5fe</color>
+    <color name="darkpink">#f463a8</color>
+    <color name="darkblur">#868de4</color>
+    <color name="end_color_blue">#0d1664</color>
+    <color name="medim_color_blue">#132b9b</color>
+    <color name="start_color_blue">#3c51c1</color>
+    <color name="transparent">#00ffffff</color>
 </resources>

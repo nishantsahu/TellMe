@@ -99,7 +99,7 @@ public class CropDetailActivity extends AppCompatActivity {
                                 }
 
                                 for(int i=0; i<array.length(); i++){
-                                    list.append(frm[i]+", ");
+                                    String ar = frm[i];
                                 }
 
                             } catch (IOException e) {
