@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -32,6 +34,7 @@ public class CropDetailActivity extends AppCompatActivity {
     String URL;
     ProgressDialog progressDialog;
     Spinner spinner;
+    String[] frm = new String[1000];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,12 +46,6 @@ public class CropDetailActivity extends AppCompatActivity {
 
         spinner = findViewById(R.id.farmList);
 
-        String[] farms = {
-                "Road side", "park", "river side"
-        };
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, farms);
-        spinner.setAdapter(adapter);
 
         list = findViewById(R.id.list);
 
@@ -61,6 +58,7 @@ public class CropDetailActivity extends AppCompatActivity {
         client = new OkHttpClient();
 
         getFarmList();
+
     }
 
     public void getFarmList() {
@@ -94,7 +92,16 @@ public class CropDetailActivity extends AppCompatActivity {
                                 String json = response.body().string();
                                 JSONObject mainObj = new JSONObject(json);
                                 String data = mainObj.getString("data");
-                                list.setText(data);
+                                JSONArray array=mainObj.getJSONArray("data");
+
+                                for(int i=0; i<array.length(); i++){
+                                    frm[i] = array.getString(i);
+                                }
+
+                                for(int i=0; i<array.length(); i++){
+                                    list.append(frm[i]+", ");
+                                }
+
                             } catch (IOException e) {
                                 e.printStackTrace();
                             } catch (JSONException e) {
