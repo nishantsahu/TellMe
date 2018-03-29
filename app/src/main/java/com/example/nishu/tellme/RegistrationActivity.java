@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -35,6 +36,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private Button getOTP, verify;
     private EditText aadhar;
     RelativeLayout popup;
+    TextView again_login;
     private EditText otp;
     ImageView close;
     ProgressDialog mProgressDialog;
@@ -44,6 +46,7 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
+        again_login=findViewById(R.id.back_to_login);
         aadhar = findViewById(R.id.aadhar_register);
         getOTP = findViewById(R.id.getOTP);
         popup = findViewById(R.id.popup);
@@ -51,6 +54,13 @@ public class RegistrationActivity extends AppCompatActivity {
         verify = findViewById(R.id.verify);
         close = findViewById(R.id.close);
 
+        again_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent login=new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(login);
+            }
+        });
         setProgressBar();
 
         close.setOnClickListener(new View.OnClickListener() {
@@ -198,5 +208,11 @@ public class RegistrationActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent login=new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(login);
     }
 }

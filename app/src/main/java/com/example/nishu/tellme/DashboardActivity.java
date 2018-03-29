@@ -82,8 +82,7 @@ public class DashboardActivity extends AppCompatActivity {
         cropDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent crop = new Intent(getApplicationContext(), CropDetailActivity.class);
-                startActivity(crop);
+                farmList();
             }
         });
 
@@ -158,5 +157,51 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void farmList(){
+        progressDialog.show();
+        Request request = new Request.Builder()
+                .url(URL+"/getFarmList")
+                .post(RequestBody.create(MediaType.parse("application/json"), "{\n" +
+                        "\t\"aadharID\" : \""+aadhar+"\"\n" +
+                        "}"))
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(), "Connection Error", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                if (response.isSuccessful()){
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                progressDialog.dismiss();
+                                String json = response.body().string();
+                                Toast.makeText(getApplicationContext(), json, Toast.LENGTH_LONG).show();
+                                SharedPreferences farmList = getSharedPreferences("farmList", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = farmList.edit();
+                                editor.putString("json", json);
+                                editor.commit();
+                                Intent crop = new Intent(getApplicationContext(), CropDetailActivity.class);
+                                startActivity(crop);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 }

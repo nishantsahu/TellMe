@@ -65,7 +65,6 @@ public class LoginActivity extends AppCompatActivity {
         go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mProgressDialog.show();
                 login();
             }
         });
@@ -94,37 +93,44 @@ public class LoginActivity extends AppCompatActivity {
         String aadhar, password;
         aadhar = mAadhar.getText().toString();
         password = mPassword.getText().toString();
-        Request request = new Request.Builder().url(URL+"/login")
-                .post(RequestBody.create(MediaType.parse("application/json"), "{\n" +
-                        "\t\"aadharID\":\""+ aadhar +"\",\n" +
-                        "\t\"password\" : \""+ password +"\"\n" +
-                        "}")).build();
 
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mProgressDialog.dismiss();
-                        Toast.makeText(getApplicationContext(), "Connection Error", Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
+        if (aadhar.equals("")||password.equals("")){
+            Toast.makeText(getApplicationContext(), "Empty Field", Toast.LENGTH_LONG).show();
+        }
+        else
+            if (aadhar.length()==12){
+            mProgressDialog.show();
+            Request request = new Request.Builder().url(URL+"/login")
+                    .post(RequestBody.create(MediaType.parse("application/json"), "{\n" +
+                            "\t\"aadharID\":\""+ aadhar +"\",\n" +
+                            "\t\"password\" : \""+ password +"\"\n" +
+                            "}")).build();
 
-            @Override
-            public void onResponse(Call call, final Response response) throws IOException {
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mProgressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "Connection Error", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+
+                @Override
+                public void onResponse(Call call, final Response response) throws IOException {
                     if (response.isSuccessful()){
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 try {
-                                    mProgressDialog.dismiss();
                                     String json = response.body().string();
                                     JSONObject mainObj = new JSONObject(json);
                                     String status = mainObj.getString("status");
 
                                     if (status.equals("success")){
+                                        mProgressDialog.dismiss();
                                         Intent dashboard = new Intent(getApplicationContext(), DashboardActivity.class);
                                         String name = mainObj.getString("name");
                                         SharedPreferences sharedPreferences = getSharedPreferences("MyData", Context.MODE_PRIVATE);
@@ -136,6 +142,7 @@ public class LoginActivity extends AppCompatActivity {
                                         startActivity(dashboard);
                                     }
                                     else{
+                                        mProgressDialog.dismiss();
                                         String message = mainObj.getString("message");
                                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                                     }
@@ -148,8 +155,13 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         });
                     }
+                }
+            });
+
+        }
+        else{
+                Toast.makeText(getApplicationContext(), "Invalid aadhar", Toast.LENGTH_LONG).show();
             }
-        });
     }
 
     @Override
