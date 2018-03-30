@@ -92,15 +92,19 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginVertical="10dp">
-        <TextView
-            android:id="@+id/back_to_login"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login"
             android:layout_centerHorizontal="true"
-            android:textSize="20dp"
             android:paddingBottom="319dp"
-            android:paddingRight="250dp"/>
+            android:paddingRight="300dp">
+            <TextView
+                android:id="@+id/back_to_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                android:textSize="20dp" />
+        </RelativeLayout>
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="280dp"

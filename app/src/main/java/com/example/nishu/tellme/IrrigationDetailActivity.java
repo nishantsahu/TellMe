@@ -137,7 +137,14 @@ public class IrrigationDetailActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                feedData();
+                String a;
+                a = water.getText().toString();
+                if (a.equals("")){
+                    Toast.makeText(getApplicationContext(), "Empty Field", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    feedData();
+                }
             }
         });
 
@@ -155,7 +162,7 @@ public class IrrigationDetailActivity extends AppCompatActivity {
                 .url(URL+"/feedIrrigationData")
                 .post(RequestBody.create(MediaType.parse("application/json"), "{\n" +
                         "\t\"cropID\" : \""+crop+"\",\n" +
-                        "\t\"waterAmmount\" : \""+swater+"\",\n" +
+                        "\t\"waterAmount\" : \""+swater+"\",\n" +
                         "\t\"waterSource\" : \""+source+"\"\n" +
                         "}")).build();
 

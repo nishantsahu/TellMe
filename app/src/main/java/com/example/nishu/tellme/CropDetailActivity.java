@@ -185,6 +185,7 @@ public class CropDetailActivity extends AppCompatActivity {
                             area = Double.valueOf(csas)*0.0836127;
                             break;
                     }
+
                     Request request = new Request.Builder()
                             .url(URL+"/feedCropData")
                             .post(RequestBody.create(MediaType.parse("application/json"), "{\n" +
@@ -192,7 +193,7 @@ public class CropDetailActivity extends AppCompatActivity {
                                     "\t\"cropName\" : \""+cropnm+"\",\n" +
                                     "\t\"seedID\" : \""+seed+"\",\n" +
                                     "\t\"farmID\" : \""+frm+"\",\n" +
-                                    "\t\"cropSeededAreaSize\" : \""+area+"\"\n" +
+                                    "\t\"cropSeededAreaSize\" : \""+area.toString()+"\"\n" +
                                     "}"))
                             .build();
                     client.newCall(request).enqueue(new Callback() {
