@@ -30,7 +30,7 @@ import okhttp3.Response;
 public class DashboardActivity extends AppCompatActivity {
 
     String aadhar, pass, URL;
-    CardView farmDetails, cropDetails;
+    CardView farmDetails, cropDetails, irrigationDetails;
     Button logout;
     String name;
     OkHttpClient client;
@@ -46,6 +46,14 @@ public class DashboardActivity extends AppCompatActivity {
         progressDialog.setProgressStyle(progressDialog.STYLE_SPINNER);
 
         mName = findViewById(R.id.name);
+        irrigationDetails = findViewById(R.id.IrrigationDetails);
+
+        irrigationDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                irrigationData();
+            }
+        });
 
         SharedPreferences url = getSharedPreferences("URL", Context.MODE_PRIVATE);
         URL = url.getString("mainURL", "");
@@ -188,7 +196,6 @@ public class DashboardActivity extends AppCompatActivity {
                             try {
                                 progressDialog.dismiss();
                                 String json = response.body().string();
-                                Toast.makeText(getApplicationContext(), json, Toast.LENGTH_LONG).show();
                                 SharedPreferences farmList = getSharedPreferences("farmList", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = farmList.edit();
                                 editor.putString("json", json);
@@ -201,6 +208,51 @@ public class DashboardActivity extends AppCompatActivity {
                         }
                     });
                 }
+            }
+        });
+    }
+
+    public void irrigationData(){
+        progressDialog.show();
+        Request request = new Request.Builder()
+                .url(URL+"/getCropList")
+                .post(RequestBody.create(MediaType.parse("application/json"), "{\n" +
+                        "\t\"aadharID\" : \"111111111111\"\n" +
+                        "}"))
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(), "Connection Error", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+
+                if (response.isSuccessful()){
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressDialog.dismiss();
+                            try {
+                                String json = response.body().string();
+                                SharedPreferences cropList = getSharedPreferences("cropList", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = cropList.edit();
+                                editor.putString("cList", json);
+                                editor.commit();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+
             }
         });
     }
