@@ -30,11 +30,11 @@ import okhttp3.Response;
 public class DashboardActivity extends AppCompatActivity {
 
     String aadhar, pass, URL;
-    CardView farmDetails, cropDetails, irrigationDetails, irrigationCalculation;
+    CardView farmDetails, cropDetails, irrigationDetails;
     Button logout;
     String name;
     OkHttpClient client;
-    TextView mName;
+    TextView mName, reward;
     ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +46,9 @@ public class DashboardActivity extends AppCompatActivity {
         progressDialog.setProgressStyle(progressDialog.STYLE_SPINNER);
 
         mName = findViewById(R.id.name);
+        reward = findViewById(R.id.rewardpoint);
+        reward.setText("200 Points");
         irrigationDetails = findViewById(R.id.IrrigationDetails);
-        irrigationCalculation = findViewById(R.id.irrigationcalculation);
-
-        irrigationCalculation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent calculator = new Intent(getApplicationContext(), CalculatorDashboardActivity.class);
-                startActivity(calculator);
-            }
-        });
 
         irrigationDetails.setOnClickListener(new View.OnClickListener() {
             @Override
