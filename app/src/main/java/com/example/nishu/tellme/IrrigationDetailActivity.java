@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -40,6 +41,7 @@ public class IrrigationDetailActivity extends AppCompatActivity {
     String src;
     Spinner spinner, source;
     ProgressDialog progressDialog;
+    CardView canal, pump;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +50,25 @@ public class IrrigationDetailActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading Please wait...");
         progressDialog.setProgressStyle(progressDialog.STYLE_SPINNER);
+
+        canal = findViewById(R.id.canal);
+        pump = findViewById(R.id.pumpcard);
+
+        canal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), CanalActivity.class);
+                startActivity(i);
+            }
+        });
+
+        pump.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), PumpActivity.class);
+                startActivity(i);
+            }
+        });
 
         list1 = findViewById(R.id.list1);
         source = findViewById(R.id.source);
@@ -161,6 +182,7 @@ public class IrrigationDetailActivity extends AppCompatActivity {
         Request request = new Request.Builder()
                 .url(URL+"/feedIrrigationData")
                 .post(RequestBody.create(MediaType.parse("application/json"), "{\n" +
+                        "\t\"aadharID\" : \""+aadhar+"\",\n" +
                         "\t\"cropID\" : \""+crop+"\",\n" +
                         "\t\"waterAmount\" : \""+swater+"\",\n" +
                         "\t\"waterSource\" : \""+source+"\"\n" +

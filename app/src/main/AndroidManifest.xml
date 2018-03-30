@@ -27,7 +27,8 @@
         <activity android:name=".CropDetailActivity" />
         <activity android:name=".IrrigationDetailActivity" />
         <activity android:name=".CalculatorDashboardActivity" />
-        <activity android:name=".CanalActivity"></activity>
+        <activity android:name=".CanalActivity" />
+        <activity android:name=".PumpActivity"></activity>
     </application>
 
 </manifest>
