@@ -30,7 +30,7 @@ import okhttp3.Response;
 public class DashboardActivity extends AppCompatActivity {
 
     String aadhar, pass, URL;
-    CardView farmDetails, cropDetails, irrigationDetails;
+    CardView farmDetails, cropDetails, irrigationDetails, irrigationCalculation;
     Button logout;
     String name;
     OkHttpClient client;
@@ -47,6 +47,15 @@ public class DashboardActivity extends AppCompatActivity {
 
         mName = findViewById(R.id.name);
         irrigationDetails = findViewById(R.id.IrrigationDetails);
+        irrigationCalculation = findViewById(R.id.irrigationcalculation);
+
+        irrigationCalculation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent calculator = new Intent(getApplicationContext(), CalculatorDashboardActivity.class);
+                startActivity(calculator);
+            }
+        });
 
         irrigationDetails.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +73,7 @@ public class DashboardActivity extends AppCompatActivity {
         name = sharedPreferences.getString("name", "");
         mName.setText("Welcome " + name);
 
-//        login();
+        notificationCheck();
 
         farmDetails = findViewById(R.id.farmDetails);
         cropDetails = findViewById(R.id.CropDetails);
@@ -110,62 +119,6 @@ public class DashboardActivity extends AppCompatActivity {
                 }).setNegativeButton("No", null).show();
     }
 
-    public void login(){
-
-        progressDialog.show();
-
-        Request request = new Request.Builder().url(URL+"/login")
-                .post(RequestBody.create(MediaType.parse("application/json"), "{\n" +
-                        "\t\"aadharID\":\""+ aadhar +"\",\n" +
-                        "\t\"password\" : \""+ pass +"\"\n" +
-                        "}")).build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        progressDialog.dismiss();
-                        Toast.makeText(getApplicationContext(), "Connection Error", Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-
-            @Override
-            public void onResponse(Call call, final Response response) throws IOException {
-
-                if (response.isSuccessful()){
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                progressDialog.dismiss();
-                                String json = response.body().string();
-                                JSONObject mainObj = new JSONObject(json);
-                                String status = mainObj.getString("status");
-
-                                if (status.equals("success")){
-                                    name = mainObj.getString("name");
-                                    mName.setText("Welcome, " + name);
-                                }
-                                else{
-                                    String message = mainObj.getString("message");
-                                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-                                }
-
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                }
-            }
-        });
-
-    }
 
     public void farmList(){
         progressDialog.show();
@@ -217,7 +170,7 @@ public class DashboardActivity extends AppCompatActivity {
         Request request = new Request.Builder()
                 .url(URL+"/getCropList")
                 .post(RequestBody.create(MediaType.parse("application/json"), "{\n" +
-                        "\t\"aadharID\" : \"111111111111\"\n" +
+                        "\t\"aadharID\" : \""+aadhar+"\"\n" +
                         "}"))
                 .build();
         client.newCall(request).enqueue(new Callback() {
@@ -246,6 +199,8 @@ public class DashboardActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = cropList.edit();
                                 editor.putString("cList", json);
                                 editor.commit();
+                                Intent irrigation = new Intent(getApplicationContext(), IrrigationDetailActivity.class);
+                                startActivity(irrigation);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -256,4 +211,9 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void notificationCheck() {
+
+    }
+
 }

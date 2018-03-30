@@ -6,10 +6,106 @@
     android:layout_height="match_parent"
     tools:context="com.example.nishu.tellme.IrrigationDetailActivity">
 
-    <Spinner
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/curve_bg">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Irrigation Details"
+                android:textSize="30dp"
+                android:textColor="#ffffff"
+                android:textAlignment="center"
+                android:layout_marginVertical="23dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="90dp"
+            android:layout_marginHorizontal="60dp"
+            android:id="@+id/relativeLayout">
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginVertical="5dp"
+                app:cardElevation="12dp"
+                app:cardCornerRadius="10dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginVertical="10dp"
+                            android:hint="Water Used (in Litre)"
+                            android:inputType="number"
+                            android:id="@+id/waterUsed"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Select Crop"
+                            android:id="@+id/select1"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_below="@+id/waterUsed"/>
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:id="@+id/cropList"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_below="@+id/select1"></Spinner>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Select Source of water"
+                            android:id="@+id/select2"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_below="@+id/cropList"/>
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginHorizontal="20dp"
+                            android:id="@+id/source"
+                            android:layout_below="@+id/select2"></Spinner>
+                        <Button
+                            android:layout_width="150dp"
+                            android:layout_height="50dp"
+                            android:layout_below="@id/source"
+                            android:text="Submit"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginHorizontal="10dp"
+                            android:id="@+id/submit"
+                            android:background="@drawable/colour_button"
+                            android:textColor="#fff" />
+                    </RelativeLayout>
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <!--<Spinner-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/cropList"></Spinner>-->
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/cropList">
-    </Spinner>
+        android:id="@+id/list1"
+        android:visibility="invisible"/>
 
 </RelativeLayout>

@@ -25,7 +25,8 @@
         <activity android:name=".FarmDetailActivity" />
         <activity android:name=".ConfRegActivity" />
         <activity android:name=".CropDetailActivity" />
-        <activity android:name=".IrrigationDetailActivity"></activity>
+        <activity android:name=".IrrigationDetailActivity" />
+        <activity android:name=".CalculatorDashboardActivity"></activity>
     </application>
 
 </manifest>
