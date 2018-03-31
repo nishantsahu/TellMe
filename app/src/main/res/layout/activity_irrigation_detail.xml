@@ -100,7 +100,9 @@
                                 android:layout_below="@id/submit"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Calculator"
+                                android:layout_marginHorizontal="20dp"
+                                android:text="Calculator
+(If you don't know the water usage in Litre, then use calculator given below.)"
                                 android:layout_marginVertical="10dp"
                                 android:layout_centerHorizontal="true"
                                 android:textAlignment="center"

@@ -1,5 +1,6 @@
 package com.example.nishu.tellme;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,7 +18,8 @@ public class PumpActivity extends AppCompatActivity {
     TextView output;
     Spinner spinner;
     String record;
-    Button calculate;
+    Button calculate, feed;
+    Double amount;
     Double ti;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,7 @@ public class PumpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pump);
 
         horsePower = findViewById(R.id.horsepower);
+        feed = findViewById(R.id.feed);
         time = findViewById(R.id.time);
         spinner = findViewById(R.id.timeunits);
         calculate = findViewById(R.id.calculate);
@@ -71,12 +74,21 @@ public class PumpActivity extends AppCompatActivity {
             }
         });
 
+        feed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent f = new Intent(getApplicationContext(), IrrigationDetailActivity.class);
+                f.putExtra("data", amount);
+                startActivity(f);
+            }
+        });
+
     }
 
     public void cal() {
         String unit;
         unit = record;
-        Double hp, t, amount;
+        Double hp, t;
         hp = Double.valueOf(horsePower.getText().toString());
         t = Double.valueOf(time.getText().toString());
         switch (unit){

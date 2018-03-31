@@ -39,6 +39,7 @@ public class IrrigationDetailActivity extends AppCompatActivity {
     OkHttpClient client;
     TextView list1;
     String src;
+    String amount;
     Spinner spinner, source;
     ProgressDialog progressDialog;
     CardView canal, pump;
@@ -53,6 +54,8 @@ public class IrrigationDetailActivity extends AppCompatActivity {
 
         canal = findViewById(R.id.canal);
         pump = findViewById(R.id.pumpcard);
+
+        feed();
 
         canal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -230,6 +233,10 @@ public class IrrigationDetailActivity extends AppCompatActivity {
                 }
             }
         });
+
+    }
+
+    public void feed(){
 
     }
 }

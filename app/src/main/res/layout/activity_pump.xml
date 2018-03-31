@@ -99,6 +99,16 @@
                         android:textAlignment="center"
                         android:textSize="20sp"/>
 
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_below="@id/output"
+                        android:id="@+id/feed"
+                        android:paddingHorizontal="10dp"
+                        android:background="@drawable/stroke_button"
+                        android:text="Get Water Usage"/>
+
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
         </RelativeLayout>
