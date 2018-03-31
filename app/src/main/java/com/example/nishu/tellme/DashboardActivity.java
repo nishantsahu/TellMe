@@ -35,7 +35,7 @@ public class DashboardActivity extends AppCompatActivity {
     Button logout;
     String name;
     OkHttpClient client;
-    String rewa;
+    String rewa, notification;
     TextView mName, rewardPoint;
     ProgressDialog progressDialog;
     @Override
@@ -228,7 +228,7 @@ public class DashboardActivity extends AppCompatActivity {
         progressDialog.show();
 
         Request request = new Request.Builder()
-                .url(URL+"/checkNotification")
+                .url(URL+"/tempRoute")
                 .post(RequestBody.create(MediaType.parse("application/json"), "{\n" +
                         "\t\"aadharID\" : \""+aadhar+"\"\n" +
                         "}"))
@@ -256,7 +256,25 @@ public class DashboardActivity extends AppCompatActivity {
                                 String json = response.body().string();
                                 JSONObject mainObj = new JSONObject(json);
                                 rewa = mainObj.getString("reward");
+                                notification = mainObj.getString("notification");
                                 rewardPoint.setText(rewa + " Points");
+                                if (!notification.equals("")){
+                                    AlertDialog.Builder builder1 = new AlertDialog.Builder(DashboardActivity.this);
+                                    builder1.setTitle("Alert");
+                                    builder1.setMessage(notification);
+                                    builder1.setCancelable(true);
+
+                                    builder1.setPositiveButton(
+                                            "OK",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    dialog.cancel();
+                                                }
+                                            });
+
+                                    AlertDialog alert11 = builder1.create();
+                                    alert11.show();
+                                }
                             } catch (IOException e) {
                                 e.printStackTrace();
                             } catch (JSONException e) {

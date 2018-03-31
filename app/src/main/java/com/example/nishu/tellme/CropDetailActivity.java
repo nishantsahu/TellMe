@@ -36,10 +36,10 @@ public class CropDetailActivity extends AppCompatActivity {
     TextView list, list1;
     OkHttpClient client;
     Button submit;
-    String URL, record;
+    String URL, record, season;
     Double area;
     ProgressDialog progressDialog;
-    Spinner spinner, units;
+    Spinner spinner, units, crop;
     JSONArray array;
     EditText cropName, seedID, cropArea;
     OkHttpClient okHttpClient;
@@ -59,7 +59,39 @@ public class CropDetailActivity extends AppCompatActivity {
         progressDialog.setProgressStyle(progressDialog.STYLE_SPINNER);
 
         spinner = findViewById(R.id.farmList);
+        crop = findViewById(R.id.spinner);
 
+        String[] rb = {
+                "Seasonal Type", "Rabi", "Kharif", "Others"
+        };
+
+        ArrayAdapter<String> rb1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, rb);
+        crop.setAdapter(rb1);
+
+        crop.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (i){
+                    case 0:
+                        season = "type";
+                        break;
+                    case 1:
+                        season = "rabi";
+                        break;
+                    case 2:
+                        season = "kharif";
+                        break;
+                    case 3:
+                        season = "others";
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         list = findViewById(R.id.list);
         list1 = findViewById(R.id.list1);
@@ -160,13 +192,15 @@ public class CropDetailActivity extends AppCompatActivity {
                 String frm;
                 String csas;
                 String sUnit;
+                String sSeasonal;
                 cropnm = cropName.getText().toString();
                 seed = seedID.getText().toString();
                 frm = list1.getText().toString().trim();
                 csas = String.valueOf(cropArea.getText());
                 sUnit = record;
+                sSeasonal = season;
 
-                if (cropnm.equals("")||seed.equals("")||frm.equals("")||csas.equals("")){
+                if (cropnm.equals("")||seed.equals("")||frm.equals("")||csas.equals("")||sSeasonal.equals("type")){
                     progressDialog.dismiss();
                     Toast.makeText(getApplicationContext(),"Empty Fields", Toast.LENGTH_LONG).show();
                 }
@@ -189,6 +223,7 @@ public class CropDetailActivity extends AppCompatActivity {
                     Request request = new Request.Builder()
                             .url(URL+"/feedCropData")
                             .post(RequestBody.create(MediaType.parse("application/json"), "{\n" +
+                                    "\t\"seasonal\" : \""+sSeasonal+"\",\n" +
                                     "\t\"aadharID\" : \""+aadhar+"\",\n" +
                                     "\t\"cropName\" : \""+cropnm+"\",\n" +
                                     "\t\"seedID\" : \""+seed+"\",\n" +
