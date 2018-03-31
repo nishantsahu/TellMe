@@ -331,7 +331,7 @@ public class FarmDetailActivity extends AppCompatActivity {
                             "\t\"state\" : \""+state+",\",\n" +
                             "\t\"district\" : \""+dist+"\",\n" +
                             "\t\"city\" : \""+city+"\",\n" +
-                            "\t\"landArea\" : \""+sArea+"\",\n" +
+                            "\t\"landArea\" : \""+area+"\",\n" +
                             "\t\"groundWaterLevel\" : \""+sWaterLevel+"\",\n" +
                             "\t\"soilType\":\""+soilType+"\"\n" +
                             "}")).build();

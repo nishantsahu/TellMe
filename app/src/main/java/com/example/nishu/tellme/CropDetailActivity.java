@@ -223,7 +223,7 @@ public class CropDetailActivity extends AppCompatActivity {
                     Request request = new Request.Builder()
                             .url(URL+"/feedCropData")
                             .post(RequestBody.create(MediaType.parse("application/json"), "{\n" +
-                                    "\t\"seasonal\" : \""+sSeasonal+"\",\n" +
+                                    "\t\"season\" : \""+sSeasonal+"\",\n" +
                                     "\t\"aadharID\" : \""+aadhar+"\",\n" +
                                     "\t\"cropName\" : \""+cropnm+"\",\n" +
                                     "\t\"seedID\" : \""+seed+"\",\n" +

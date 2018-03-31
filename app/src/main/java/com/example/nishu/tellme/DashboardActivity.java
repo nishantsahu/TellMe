@@ -35,7 +35,7 @@ public class DashboardActivity extends AppCompatActivity {
     Button logout;
     String name;
     OkHttpClient client;
-    String rewa, notification;
+    String reward, notification;
     TextView mName, rewardPoint;
     ProgressDialog progressDialog;
     @Override
@@ -68,6 +68,8 @@ public class DashboardActivity extends AppCompatActivity {
         pass = sharedPreferences.getString("password", "");
         name = sharedPreferences.getString("name", "");
         mName.setText("Welcome " + name);
+
+        reward();
 
         notificationCheck();
 
@@ -104,7 +106,7 @@ public class DashboardActivity extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), RewardActivity.class);
                 SharedPreferences rewardPoint = getSharedPreferences("Reward", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = rewardPoint.edit();
-                editor.putString("rewards", rewa);
+                editor.putString("rewards", reward);
                 editor.commit();
                 startActivity(i);
             }
@@ -255,9 +257,8 @@ public class DashboardActivity extends AppCompatActivity {
                                 progressDialog.dismiss();
                                 String json = response.body().string();
                                 JSONObject mainObj = new JSONObject(json);
-                                rewa = mainObj.getString("reward");
+//                                rewa = mainObj.getString("reward");
                                 notification = mainObj.getString("notification");
-                                rewardPoint.setText(rewa + " Points");
                                 if (!notification.equals("")){
                                     AlertDialog.Builder builder1 = new AlertDialog.Builder(DashboardActivity.this);
                                     builder1.setTitle("Alert");
@@ -268,6 +269,7 @@ public class DashboardActivity extends AppCompatActivity {
                                             "OK",
                                             new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialog, int id) {
+                                                    clear();
                                                     dialog.cancel();
                                                 }
                                             });
@@ -286,6 +288,81 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
         
+    }
+
+    public void clear() {
+        Request request = new Request.Builder()
+                .url(URL+"/clearMessage")
+                .post(RequestBody.create(MediaType.parse("application/json"), "{\n" +
+                        "\t\"aadharID\" : \""+aadhar+"\"\n" +
+                        "}"))
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "Connection Error", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()){
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "Notification Cleared", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    public void reward(){
+        progressDialog.show();
+        Request request = new Request.Builder().url(URL+"/checkNotification")
+                .post(RequestBody.create(MediaType.parse("application/json"), "{\n" +
+                        "\t\"aadharID\" : \""+aadhar+"\"\n" +
+                        "}"))
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "Connection Error", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                if (response.isSuccessful()){
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                progressDialog.dismiss();
+                                String json = response.body().string();
+                                JSONObject mainObj = new JSONObject(json);
+                                reward = mainObj.getString("reward");
+                                rewardPoint.setText(reward + " Points");
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 
 }
